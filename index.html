@@ -7,9 +7,9 @@
     
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#121212">
+    <meta name="theme-color" content="#0f172a">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
@@ -19,36 +19,53 @@
 
     <header class="glass-header">
         <div class="logo">
-            <i class="fa-solid fa-dumbbell"></i> GymApp
+            <i class="fa-solid fa-bolt"></i> GymApp
         </div>
-        <button id="theme-toggle" class="icon-btn" aria-label="Alternar Tema">
-            <i class="fa-solid fa-moon"></i>
-        </button>
+        <!-- ALTERAÇÃO: Substituído o botão de sino por um link direto para a tela de login -->
+        <div class="header-actions">
+            <a href="login.html" id="login-btn" class="icon-btn" aria-label="Tela de Login">
+                <i class="fa-solid fa-right-to-bracket"></i>
+            </a>
+            <button id="theme-toggle" class="icon-btn" aria-label="Alternar Tema">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
     </header>
 
     <main id="app-content">
         
         <section id="view-home" class="view-section active">
             <div class="glass-card welcome-card">
-                <h2>Bem-vindo ao seu Treino</h2>
-                <p>Consistência é a chave. Pronto para esmagar seus objetivos hoje?</p>
+                <h2>Fala, Daniel! ⚡</h2>
+                <p>A consistência constrói resultados. O motor está aquecido para manter o ritmo forte deste semestre?</p>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span>Nível 4: Hipertrofia</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%;"></div>
+                    </div>
+                </div>
+
                 <div class="stats-grid">
                     <div class="stat-item glass-element">
                         <i class="fa-solid fa-fire"></i>
-                        <span class="stat-value">12</span>
-                        <span class="stat-label">Treinos no mês</span>
+                        <span class="stat-value" id="workout-counter">102</span>
+                        <span class="stat-label">Treinos Concluídos</span>
                     </div>
                     <div class="stat-item glass-element">
-                        <i class="fa-solid fa-bolt"></i>
-                        <span class="stat-value">Nível 4</span>
-                        <span class="stat-label">Hipertrofia</span>
+                        <i class="fa-solid fa-stopwatch"></i>
+                        <span class="stat-value">45m</span>
+                        <span class="stat-label">Tempo Médio</span>
                     </div>
                 </div>
             </div>
             
             <h3 class="section-title">Treino do Dia</h3>
             <div id="featured-workout" class="glass-card featured-card">
-                </div>
+            </div>
         </section>
 
         <section id="view-workouts" class="view-section">
@@ -57,55 +74,52 @@
                 <p>Explore os exercícios detalhados para o seu desenvolvimento.</p>
                 <div class="search-bar glass-element">
                     <i class="fa-solid fa-search"></i>
-                    <input type="text" id="search-workout" placeholder="Buscar exercício...">
+                    <input type="text" id="search-workout" placeholder="Buscar exercício (ex: Peito, Agachamento)...">
                 </div>
             </div>
             <div id="workout-grid" class="workout-grid">
-                </div>
+            </div>
         </section>
 
         <section id="view-finance" class="view-section">
             <div class="glass-card header-card">
-                <h2>Financeiro</h2>
-                <p>Gerencie sua assinatura e pagamentos.</p>
+                <h2>Assinatura</h2>
+                <p>Gerencie seu plano premium de forma simples.</p>
             </div>
             
             <div class="glass-card plan-card">
                 <div class="plan-header">
-                    <h3>Plano Premium Anual</h3>
+                    <h3>Plano Pro Anual</h3>
                     <span class="status active">Ativo</span>
                 </div>
                 <div class="plan-details">
-                    <div class="price">R$ 119<span>/mês</span></div>
+                    <div class="price">R$ 119<span class="price-period">/mês</span></div>
                     <p>Vencimento: <strong>15 de cada mês</strong></p>
                 </div>
                 <hr class="divider">
                 <div class="payment-action">
-                    <button class="btn btn-primary glass-btn" id="pay-btn">
+                    <button class="btn btn-primary glow-effect" id="pay-btn">
                         <i class="fa-solid fa-qrcode"></i> Pagar Mensalidade
-                    </button>
-                    <button class="btn btn-secondary glass-btn">
-                        <i class="fa-solid fa-receipt"></i> Histórico
                     </button>
                 </div>
             </div>
 
             <div class="glass-card history-card">
-                <h3>Últimos Pagamentos</h3>
+                <h3 class="subsection-title">Últimos Pagamentos</h3>
                 <ul class="payment-list">
                     <li class="glass-element">
-                        <div>
+                        <div class="payment-info">
                             <strong>Maio/2026</strong>
-                            <span>Pix</span>
+                            <span>Pix - Autenticado</span>
                         </div>
-                        <span class="text-success">Pago</span>
+                        <span class="badge success">Pago</span>
                     </li>
                     <li class="glass-element">
-                        <div>
+                        <div class="payment-info">
                             <strong>Abril/2026</strong>
-                            <span>Cartão de Crédito</span>
+                            <span>Cartão Final 4321</span>
                         </div>
-                        <span class="text-success">Pago</span>
+                        <span class="badge success">Pago</span>
                     </li>
                 </ul>
             </div>
@@ -113,37 +127,61 @@
 
     </main>
 
-    <nav class="bottom-nav glass-nav">
-        <button class="nav-item active" data-target="view-home">
-            <i class="fa-solid fa-house"></i>
-            <span>Início</span>
-        </button>
-        <button class="nav-item" data-target="view-workouts">
-            <i class="fa-solid fa-dumbbell"></i>
-            <span>Treinos</span>
-        </button>
-        <button class="nav-item" data-target="view-finance">
-            <i class="fa-solid fa-wallet"></i>
-            <span>Mensalidade</span>
-        </button>
+    <nav class="bottom-nav-container">
+        <div class="glass-nav">
+            <button class="nav-item active" data-target="view-home">
+                <i class="fa-solid fa-house"></i>
+                <span>Início</span>
+            </button>
+            <button class="nav-item" data-target="view-workouts">
+                <i class="fa-solid fa-dumbbell"></i>
+                <span>Treinos</span>
+            </button>
+            <button class="nav-item" data-target="view-finance">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Finanças</span>
+            </button>
+        </div>
     </nav>
 
     <div id="checkout-modal" class="modal-overlay hidden">
         <div class="glass-card modal-content">
             <div class="modal-header">
                 <h3>Pagamento - Fatura Atual</h3>
-                <button id="close-modal" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+                <button class="icon-btn close-modal"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="modal-body">
-                <p>Escaneie o QR Code abaixo no app do seu banco para pagar R$ 119,00.</p>
+                <p>Escaneie o QR Code no app do seu banco para pagar <strong>R$ 119,00</strong>.</p>
                 <div class="qr-placeholder glass-element">
                     <i class="fa-solid fa-qrcode fa-4x"></i>
                 </div>
-                <input type="text" value="00020126580014br.gov.bcb.pix..." class="glass-input" readonly>
-                <button class="btn btn-primary glass-btn copy-btn">Copiar Código Pix</button>
+                <input type="text" value="00020126580014br.gov.bcb.pix.exemplo.xyz" class="glass-input" readonly id="pix-code">
+                <button class="btn btn-primary copy-btn"><i class="fa-regular fa-copy"></i> Copiar Código Pix</button>
             </div>
         </div>
     </div>
+
+    <div id="active-workout-modal" class="modal-overlay hidden">
+        <div class="glass-card modal-content fullscreen-modal">
+            <div class="modal-header">
+                <h3 id="active-title">Treino</h3>
+                <button class="icon-btn close-modal-timer"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+            <div class="modal-body center-content">
+                <div class="timer-display" id="timer-display">01:00</div>
+                <p class="timer-label">Tempo de Descanso</p>
+                <div class="timer-controls">
+                    <button class="btn btn-secondary" id="btn-timer-reset"><i class="fa-solid fa-rotate-left"></i></button>
+                    <button class="btn btn-primary" id="btn-timer-start"><i class="fa-solid fa-play"></i> Iniciar</button>
+                    <button class="btn btn-secondary" id="btn-timer-add">+15s</button>
+                </div>
+                <hr class="divider">
+                <button class="btn btn-success" id="btn-finish-workout"><i class="fa-solid fa-check"></i> Concluir Série</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
 
     <script src="script.js"></script>
 </body>

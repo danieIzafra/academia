@@ -1,165 +1,307 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. BANCO DE DADOS DE TREINOS (Expansível para +1000 linhas de dados) ---
-    // Você pode escalar este array com infinitos objetos de exercícios
+    // --- 1. BANCO DE DADOS (Expandido com Séries e Repetições) ---
     const workoutsDB = [
         {
             id: 1,
             title: "Supino Reto com Barra",
-            description: "Exercício fundamental para o desenvolvimento do peitoral maior, tríceps e deltoide anterior. Mantenha as escápulas retraídas.",
+            description: "Exercício fundamental para o peitoral maior e tríceps. Mantenha as escápulas retraídas.",
             image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=800&auto=format&fit=crop",
             muscle: "Peito",
-            level: "Intermediário"
+            level: "Intermediário",
+            sets: 4,
+            reps: "8-12"
         },
         {
             id: 2,
             title: "Agachamento Livre",
-            description: "O rei dos exercícios de perna. Trabalha quadríceps, glúteos e core. Foque na amplitude e em manter a coluna neutra.",
+            description: "O rei dos exercícios de perna. Trabalha quadríceps e glúteos. Foque na amplitude.",
             image: "https://images.unsplash.com/photo-1566241142559-40e1dab266c6?q=80&w=800&auto=format&fit=crop",
             muscle: "Pernas",
-            level: "Avançado"
+            level: "Avançado",
+            sets: 4,
+            reps: "10-15"
         },
         {
             id: 3,
             title: "Puxada Frontal",
-            description: "Foco no grande dorsal. Evite usar impulso e concentre-se em puxar a barra com as costas, não apenas com os braços.",
+            description: "Foco no grande dorsal. Concentre-se em puxar a barra com as costas.",
             image: "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?q=80&w=800&auto=format&fit=crop",
             muscle: "Costas",
-            level: "Iniciante"
+            level: "Iniciante",
+            sets: 3,
+            reps: "12"
         },
         {
             id: 4,
             title: "Desenvolvimento com Halteres",
-            description: "Construção de ombros volumosos e fortes. O controle na descida (fase excêntrica) é crucial para evitar lesões.",
+            description: "Construção de ombros volumosos e fortes. O controle na descida é crucial.",
             image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800&auto=format&fit=crop",
             muscle: "Ombros",
-            level: "Intermediário"
-        },
-        {
-            id: 5,
-            title: "Levantamento Terra",
-            description: "Exercício composto de cadeia posterior. Exige precisão técnica para recrutar glúteos, isquiotibiais e lombares.",
-            image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop",
-            muscle: "Corpo Inteiro",
-            level: "Avançado"
+            level: "Intermediário",
+            sets: 3,
+            reps: "10"
         }
-        // Para chegar a mil linhas, adicione centenas de exercícios aqui:
-        // Rosca Direta, Tríceps Testa, Leg Press, Cadeira Extensora, Panturrilha no Smith...
     ];
 
-    // --- 2. SISTEMA DE NAVEGAÇÃO SPA (Single Page Application) ---
+    // --- 2. NAVEGAÇÃO SPA ---
     const navItems = document.querySelectorAll('.nav-item');
     const viewSections = document.querySelectorAll('.view-section');
 
     navItems.forEach(item => {
         item.addEventListener('click', () => {
-            // Remove active state de todos
             navItems.forEach(nav => nav.classList.remove('active'));
             viewSections.forEach(section => section.classList.remove('active'));
 
-            // Adiciona active no clicado
             item.classList.add('active');
             const targetId = item.getAttribute('data-target');
-            document.getElementById(targetId).classList.add('active');
+            if (document.getElementById(targetId)) {
+                document.getElementById(targetId).classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
 
-    // --- 3. SISTEMA DE TEMA DARK/LIGHT COM PERSISTÊNCIA ---
+    // --- 3. GESTÃO DE TEMAS (DARK/LIGHT) ---
+    // Refatorado para evitar erros na tela de login e unificar lógica
     const themeToggleBtn = document.getElementById('theme-toggle');
     const htmlElement = document.documentElement;
-    const themeIcon = themeToggleBtn.querySelector('i');
-
-    // Checa preferência salva
-    const savedTheme = localStorage.getItem('gymAppTheme') || 'dark';
-    setTheme(savedTheme);
-
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
-    });
 
     function setTheme(theme) {
         htmlElement.setAttribute('data-theme', theme);
         localStorage.setItem('gymAppTheme', theme);
         
-        if (theme === 'light') {
-            themeIcon.classList.replace('fa-moon', 'fa-sun');
-        } else {
-            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        if (themeToggleBtn) {
+            const themeIcon = themeToggleBtn.querySelector('i');
+            if (themeIcon) {
+                themeIcon.className = theme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            }
         }
     }
 
-    // --- 4. RENDERIZAÇÃO DINÂMICA DO DOM (Data Binding) ---
+    const savedTheme = localStorage.getItem('gymAppTheme') || 'dark';
+    setTheme(savedTheme);
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+    }
+
+    // --- 4. SISTEMA DE NOTIFICAÇÕES (TOASTS) ---
+    function showToast(message, icon = 'fa-circle-check') {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
+        
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.animation = 'fadeOut 0.3s ease forwards';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // --- 5. RENDERIZAÇÃO DOM ---
     const workoutGrid = document.getElementById('workout-grid');
     const searchInput = document.getElementById('search-workout');
-    const featuredWorkoutContainer = document.getElementById('featured-workout');
+    const featuredContainer = document.getElementById('featured-workout');
 
-    // Renderiza Treino em Destaque (Início)
-    function renderFeatured() {
-        const featured = workoutsDB[1]; // Pegando o Agachamento como exemplo
-        featuredWorkoutContainer.innerHTML = `
-            <img src="${featured.image}" alt="${featured.title}" style="width:100%; height:150px; object-fit:cover; border-radius:10px; margin-bottom:15px;">
-            <h4>${featured.title}</h4>
-            <p>${featured.description}</p>
+    function createWorkoutCard(workout, isFeatured = false) {
+        return `
+            <div class="workout-img-container">
+                <img src="${workout.image}" alt="${workout.title}" class="workout-img">
+                <div class="workout-overlay"></div>
+            </div>
+            <div class="workout-info">
+                <div class="workout-tags">
+                    <span class="tag">${workout.muscle}</span>
+                    <span class="tag">${workout.level}</span>
+                </div>
+                <h3>${workout.title}</h3>
+                <p>${workout.description}</p>
+                <div class="workout-meta">
+                    <span><i class="fa-solid fa-layer-group"></i> ${workout.sets} Séries</span>
+                    <span><i class="fa-solid fa-rotate-right"></i> ${workout.reps} Reps</span>
+                </div>
+                <button class="btn btn-primary btn-start-workout" data-title="${workout.title}">
+                    <i class="fa-solid fa-play"></i> Iniciar Treino
+                </button>
+            </div>
         `;
     }
 
-    // Renderiza Cards no Catálogo
+    function renderFeatured() {
+        const featured = workoutsDB[1]; // Agachamento em destaque
+        if(featuredContainer) featuredContainer.innerHTML = createWorkoutCard(featured, true);
+    }
+
     function renderWorkouts(workouts) {
+        if(!workoutGrid) return;
         workoutGrid.innerHTML = '';
         workouts.forEach(workout => {
             const card = document.createElement('div');
             card.className = 'glass-card workout-card';
-            card.innerHTML = `
-                <img src="${workout.image}" alt="${workout.title}" class="workout-img">
-                <div class="workout-info">
-                    <div class="workout-tags">
-                        <span class="tag">${workout.muscle}</span>
-                        <span class="tag">${workout.level}</span>
-                    </div>
-                    <h3>${workout.title}</h3>
-                    <p>${workout.description}</p>
-                </div>
-            `;
+            card.innerHTML = createWorkoutCard(workout);
             workoutGrid.appendChild(card);
+        });
+        attachWorkoutListeners();
+    }
+
+    if(searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = workoutsDB.filter(workout => 
+                workout.title.toLowerCase().includes(searchTerm) || 
+                workout.muscle.toLowerCase().includes(searchTerm)
+            );
+            renderWorkouts(filtered);
         });
     }
 
-    // Sistema de Busca (Filtro)
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        const filtered = workoutsDB.filter(workout => 
-            workout.title.toLowerCase().includes(searchTerm) || 
-            workout.muscle.toLowerCase().includes(searchTerm)
-        );
-        renderWorkouts(filtered);
+    // --- 6. FUNCIONALIDADE: CRONÔMETRO DE DESCANSO ---
+    const activeModal = document.getElementById('active-workout-modal');
+    const activeTitle = document.getElementById('active-title');
+    const timerDisplay = document.getElementById('timer-display');
+    const btnTimerStart = document.getElementById('btn-timer-start');
+    const btnTimerReset = document.getElementById('btn-timer-reset');
+    const btnTimerAdd = document.getElementById('btn-timer-add');
+    const btnFinishWorkout = document.getElementById('btn-finish-workout');
+    
+    let timerInterval;
+    let timeLeft = 60; 
+    let isRunning = false;
+
+    function formatTime(seconds) {
+        const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const s = (seconds % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+    }
+
+    function updateTimerDisplay() {
+        if(timerDisplay) timerDisplay.innerText = formatTime(timeLeft);
+    }
+
+    function startTimer() {
+        if (isRunning) return;
+        isRunning = true;
+        btnTimerStart.innerHTML = `<i class="fa-solid fa-pause"></i> Pausar`;
+        btnTimerStart.classList.replace('btn-primary', 'btn-secondary');
+        
+        timerInterval = setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                updateTimerDisplay();
+            } else {
+                pauseTimer();
+                showToast('Tempo de descanso finalizado! Hora de puxar ferro.', 'fa-bell');
+                if("vibrate" in navigator) navigator.vibrate([200, 100, 200]); 
+            }
+        }, 1000);
+    }
+
+    function pauseTimer() {
+        isRunning = false;
+        clearInterval(timerInterval);
+        if(btnTimerStart) {
+            btnTimerStart.innerHTML = `<i class="fa-solid fa-play"></i> Continuar`;
+            btnTimerStart.classList.replace('btn-secondary', 'btn-primary');
+        }
+    }
+
+    if(btnTimerStart) {
+        btnTimerStart.addEventListener('click', () => {
+            isRunning ? pauseTimer() : startTimer();
+        });
+    }
+
+    if(btnTimerReset) {
+        btnTimerReset.addEventListener('click', () => {
+            pauseTimer();
+            timeLeft = 60;
+            updateTimerDisplay();
+            btnTimerStart.innerHTML = `<i class="fa-solid fa-play"></i> Iniciar`;
+        });
+    }
+
+    if(btnTimerAdd) {
+        btnTimerAdd.addEventListener('click', () => {
+            timeLeft += 15;
+            updateTimerDisplay();
+        });
+    }
+
+    if(btnFinishWorkout) {
+        btnFinishWorkout.addEventListener('click', () => {
+            if(activeModal) activeModal.classList.add('hidden');
+            pauseTimer();
+            showToast('Série concluída! Mais um passo para a meta.', 'fa-trophy');
+            
+            const counter = document.getElementById('workout-counter');
+            if(counter) counter.innerText = parseInt(counter.innerText) + 1;
+        });
+    }
+
+    document.querySelectorAll('.close-modal-timer').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if(activeModal) activeModal.classList.add('hidden');
+            pauseTimer();
+        });
     });
 
-    // --- 5. LÓGICA DO SETOR FINANCEIRO (Modal) ---
+    function attachWorkoutListeners() {
+        document.querySelectorAll('.btn-start-workout').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const title = e.currentTarget.getAttribute('data-title');
+                if(activeTitle) activeTitle.innerText = title;
+                timeLeft = 60; 
+                updateTimerDisplay();
+                pauseTimer();
+                if(btnTimerStart) btnTimerStart.innerHTML = `<i class="fa-solid fa-play"></i> Iniciar`;
+                if(activeModal) activeModal.classList.remove('hidden');
+            });
+        });
+    }
+
+    // --- 7. MODAL FINANCEIRO (PIX) ---
     const payBtn = document.getElementById('pay-btn');
-    const modal = document.getElementById('checkout-modal');
-    const closeModal = document.getElementById('close-modal');
+    const pixModal = document.getElementById('checkout-modal');
     const copyBtn = document.querySelector('.copy-btn');
+    const pixInput = document.getElementById('pix-code');
 
-    payBtn.addEventListener('click', () => {
-        modal.classList.remove('hidden');
+    if(payBtn && pixModal) payBtn.addEventListener('click', () => pixModal.classList.remove('hidden'));
+    
+    document.querySelectorAll('.close-modal').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if(pixModal) pixModal.classList.add('hidden');
+        });
     });
 
-    closeModal.addEventListener('click', () => {
-        modal.classList.add('hidden');
-    });
+    if(copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            if(pixInput) {
+                pixInput.select();
+                document.execCommand("copy");
+            }
+            showToast('Código Pix copiado com sucesso!', 'fa-copy');
+            
+            copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copiado!';
+            copyBtn.classList.replace('btn-primary', 'btn-success');
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copiar Código Pix';
+                copyBtn.classList.replace('btn-success', 'btn-primary');
+            }, 2000);
+        });
+    }
 
-    copyBtn.addEventListener('click', () => {
-        copyBtn.innerText = 'Código Copiado!';
-        copyBtn.style.background = 'var(--success)';
-        setTimeout(() => {
-            copyBtn.innerHTML = 'Copiar Código Pix';
-            copyBtn.style.background = 'var(--accent-color)';
-        }, 2000);
-    });
-
-    // Inicialização da UI
-    renderFeatured();
-    renderWorkouts(workoutsDB);
+    // Inicialização apenas se for a tela principal
+    if (document.getElementById('workout-grid')) {
+        renderFeatured();
+        renderWorkouts(workoutsDB);
+    }
 });

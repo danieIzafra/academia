@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GymApp Pro - Login</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script>
+        // Executa imediatamente antes de renderizar o body para evitar "piscadas" de cor indesejadas
+        const savedTheme = localStorage.getItem('gymAppTheme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+    
+    <style>
+        /* Estilos específicos e refinados para centralização e layout da tela de login */
+        .login-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px;
+            max-width: 420px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .login-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-primary);
+            margin-bottom: 32px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            text-shadow: 0 0 20px var(--shadow-glow);
+        }
+
+        .login-logo i {
+            color: var(--accent-color);
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        .login-card {
+            width: 100%;
+            padding: 36px 28px;
+            margin-bottom: 0;
+        }
+
+        .login-card h2 {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+
+        .login-card p {
+            margin-bottom: 28px;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-container i {
+            position: absolute;
+            left: 16px;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .input-container .glass-input {
+            width: 100%;
+            background: var(--bg-base);
+            border: 1px solid var(--border-color);
+            padding: 16px 16px 16px 48px; /* Espaço para o ícone */
+            color: var(--text-primary);
+            border-radius: var(--radius-md);
+            outline: none;
+            height: 54px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-container .glass-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px var(--shadow-glow);
+        }
+
+        .input-container .glass-input:focus + i {
+            color: var(--accent-color);
+        }
+
+        .options-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            font-size: 0.85rem;
+            width: 100%;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .remember-me input[type="checkbox"] {
+            accent-color: var(--accent-color);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .forgot-password:hover {
+            color: var(--accent-color);
+        }
+
+        .login-footer {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .login-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .login-footer a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        @keyframes pulseGlow {
+            from { text-shadow: 0 0 5px var(--shadow-glow); }
+            to { text-shadow: 0 0 20px var(--accent-color); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-background"></div>
+
+    <main class="login-wrapper">
+        <!-- Ações do cabeçalho replicadas para a tela de login manter a consistência e alternar temas livremente -->
+        <div class="header-actions" style="position: absolute; top: 24px; right: 24px; z-index: 10;">
+            <a href="index.html" class="icon-btn" aria-label="Voltar para a Home">
+                <i class="fa-solid fa-house"></i>
+            </a>
+            <button id="theme-toggle" class="icon-btn" aria-label="Alternar Tema">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="login-logo">
+            <i class="fa-solid fa-bolt"></i> GymApp
+        </div>
+
+        <div class="glass-card login-card">
+            <h2>Bem-vindo de volta! ⚡</h2>
+            <p>Insira suas credenciais para acessar seus treinos e evolução.</p>
+
+            <form id="login-form" action="index.html">
+                <div class="form-group">
+                    <label for="email">E-mail de Acesso</label>
+                    <div class="input-container">
+                        <input type="email" id="email" class="glass-input" placeholder="seu@email.com" required autocomplete="email">
+                        <i class="fa-regular fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Sua Senha</label>
+                    <div class="input-container">
+                        <input type="password" id="password" class="glass-input" placeholder="••••••••" required autocomplete="current-password">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                </div>
+
+                <div class="options-row">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember"> Lembrar de mim
+                    </label>
+                    <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary glow-effect">
+                    <i class="fa-solid fa-right-to-bracket"></i> Entrar no App
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>Ainda não é membro? <a href="#">Criar uma conta</a></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- O script.js foi importado aqui também para que a funcionalidade de alternar tema funcione perfeitamente na tela de login -->
+    <script src="script.js"></script>
+</body>
+</html>
