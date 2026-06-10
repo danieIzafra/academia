@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GymApp Pro</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#121212">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-background"></div>
+
+    <header class="glass-header">
+        <div class="logo">
+            <i class="fa-solid fa-dumbbell"></i> GymApp
+        </div>
+        <button id="theme-toggle" class="icon-btn" aria-label="Alternar Tema">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+    </header>
+
+    <main id="app-content">
+        
+        <section id="view-home" class="view-section active">
+            <div class="glass-card welcome-card">
+                <h2>Bem-vindo ao seu Treino</h2>
+                <p>Consistência é a chave. Pronto para esmagar seus objetivos hoje?</p>
+                <div class="stats-grid">
+                    <div class="stat-item glass-element">
+                        <i class="fa-solid fa-fire"></i>
+                        <span class="stat-value">12</span>
+                        <span class="stat-label">Treinos no mês</span>
+                    </div>
+                    <div class="stat-item glass-element">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span class="stat-value">Nível 4</span>
+                        <span class="stat-label">Hipertrofia</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title">Treino do Dia</h3>
+            <div id="featured-workout" class="glass-card featured-card">
+                </div>
+        </section>
+
+        <section id="view-workouts" class="view-section">
+            <div class="glass-card header-card">
+                <h2>Catálogo de Treinos</h2>
+                <p>Explore os exercícios detalhados para o seu desenvolvimento.</p>
+                <div class="search-bar glass-element">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="search-workout" placeholder="Buscar exercício...">
+                </div>
+            </div>
+            <div id="workout-grid" class="workout-grid">
+                </div>
+        </section>
+
+        <section id="view-finance" class="view-section">
+            <div class="glass-card header-card">
+                <h2>Financeiro</h2>
+                <p>Gerencie sua assinatura e pagamentos.</p>
+            </div>
+            
+            <div class="glass-card plan-card">
+                <div class="plan-header">
+                    <h3>Plano Premium Anual</h3>
+                    <span class="status active">Ativo</span>
+                </div>
+                <div class="plan-details">
+                    <div class="price">R$ 119<span>/mês</span></div>
+                    <p>Vencimento: <strong>15 de cada mês</strong></p>
+                </div>
+                <hr class="divider">
+                <div class="payment-action">
+                    <button class="btn btn-primary glass-btn" id="pay-btn">
+                        <i class="fa-solid fa-qrcode"></i> Pagar Mensalidade
+                    </button>
+                    <button class="btn btn-secondary glass-btn">
+                        <i class="fa-solid fa-receipt"></i> Histórico
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass-card history-card">
+                <h3>Últimos Pagamentos</h3>
+                <ul class="payment-list">
+                    <li class="glass-element">
+                        <div>
+                            <strong>Maio/2026</strong>
+                            <span>Pix</span>
+                        </div>
+                        <span class="text-success">Pago</span>
+                    </li>
+                    <li class="glass-element">
+                        <div>
+                            <strong>Abril/2026</strong>
+                            <span>Cartão de Crédito</span>
+                        </div>
+                        <span class="text-success">Pago</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="bottom-nav glass-nav">
+        <button class="nav-item active" data-target="view-home">
+            <i class="fa-solid fa-house"></i>
+            <span>Início</span>
+        </button>
+        <button class="nav-item" data-target="view-workouts">
+            <i class="fa-solid fa-dumbbell"></i>
+            <span>Treinos</span>
+        </button>
+        <button class="nav-item" data-target="view-finance">
+            <i class="fa-solid fa-wallet"></i>
+            <span>Mensalidade</span>
+        </button>
+    </nav>
+
+    <div id="checkout-modal" class="modal-overlay hidden">
+        <div class="glass-card modal-content">
+            <div class="modal-header">
+                <h3>Pagamento - Fatura Atual</h3>
+                <button id="close-modal" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p>Escaneie o QR Code abaixo no app do seu banco para pagar R$ 119,00.</p>
+                <div class="qr-placeholder glass-element">
+                    <i class="fa-solid fa-qrcode fa-4x"></i>
+                </div>
+                <input type="text" value="00020126580014br.gov.bcb.pix..." class="glass-input" readonly>
+                <button class="btn btn-primary glass-btn copy-btn">Copiar Código Pix</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
