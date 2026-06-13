@@ -1,5 +1,5 @@
 // sw.js - Service Worker Básico para permitir a instalação do PWA
-const CACHE_NAME = 'gymapp-v1';
+const CACHE_NAME = 'gymapp-v2';
 
 self.addEventListener('install', (event) => {
     self.skipWaiting();
