@@ -17,7 +17,6 @@
     </script>
     
     <style>
-        /* Estilos específicos e refinados para centralização e layout da tela de login */
         .login-wrapper {
             display: flex;
             flex-direction: column;
@@ -96,7 +95,7 @@
             width: 100%;
             background: var(--bg-base);
             border: 1px solid var(--border-color);
-            padding: 16px 16px 16px 48px; /* Espaço para o ícone */
+            padding: 16px 16px 16px 48px;
             color: var(--text-primary);
             border-radius: var(--radius-md);
             outline: none;
@@ -178,11 +177,7 @@
     <div class="app-background"></div>
 
     <main class="login-wrapper">
-        <!-- Ações do cabeçalho replicadas para a tela de login manter a consistência e alternar temas livremente -->
         <div class="header-actions" style="position: absolute; top: 24px; right: 24px; z-index: 10;">
-            <a href="index.html" class="icon-btn" aria-label="Voltar para a Home">
-                <i class="fa-solid fa-house"></i>
-            </a>
             <button id="theme-toggle" class="icon-btn" aria-label="Alternar Tema">
                 <i class="fa-solid fa-moon"></i>
             </button>
@@ -196,7 +191,7 @@
             <h2>Bem-vindo de volta! ⚡</h2>
             <p>Insira suas credenciais para acessar seus treinos e evolução.</p>
 
-            <form id="login-form" action="index.html">
+            <form id="login-form">
                 <div class="form-group">
                     <label for="email">E-mail de Acesso</label>
                     <div class="input-container">
@@ -231,7 +226,6 @@
         </div>
     </main>
 
-    <!-- O script.js foi importado aqui também para que a funcionalidade de alternar tema funcione perfeitamente na tela de login -->
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymApp Pro - Cadastro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-wrapper { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 24px; max-width: 420px; margin: 0 auto; position: relative; }
+        .login-logo { font-size: 2.5rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--text-primary); margin-bottom: 32px; display: flex; gap: 12px; align-items: center; text-shadow: 0 0 20px var(--shadow-glow); }
+        .login-logo i { color: var(--accent-color); animation: pulseGlow 2s infinite alternate; }
+        .login-card { width: 100%; padding: 36px 28px; }
+        .form-group { margin-bottom: 20px; width: 100%; }
+        .form-group label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; }
+        .input-container { position: relative; display: flex; align-items: center; }
+        .input-container i { position: absolute; left: 16px; color: var(--text-secondary); font-size: 1.1rem; transition: 0.3s; }
+        .input-container .glass-input { width: 100%; background: var(--bg-base); border: 1px solid var(--border-color); padding: 16px 16px 16px 48px; color: var(--text-primary); border-radius: var(--radius-md); height: 54px; outline: none; }
+        .input-container .glass-input:focus { border-color: var(--accent-color); box-shadow: 0 0 10px var(--shadow-glow); }
+        .login-footer { margin-top: 24px; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+        .login-footer a { color: var(--accent-color); text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="app-background"></div>
+    <main class="login-wrapper">
+        <div class="login-logo"><i class="fa-solid fa-bolt"></i> GymApp</div>
+        <div class="glass-card login-card">
+            <h2>Criar Conta ⚡</h2>
+            <p>Junte-se para acompanhar sua evolução.</p>
+
+            <form id="cadastro-form">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <div class="input-container">
+                        <input type="text" id="nome" class="glass-input" placeholder="Seu nome" required>
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <div class="input-container">
+                        <input type="email" id="email" class="glass-input" placeholder="seu@email.com" required>
+                        <i class="fa-regular fa-envelope"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <div class="input-container">
+                        <input type="password" id="senha" class="glass-input" placeholder="Mínimo 6 caracteres" required minlength="6">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary glow-effect" style="margin-top: 10px;">
+                    <i class="fa-solid fa-user-plus"></i> Cadastrar
+                </button>
+            </form>
+            <div class="login-footer">
+                <p>Já tem uma conta? <a href="login.html">Fazer login</a></p>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        
+        // 🔴 COLOQUE AS MESMAS CREDENCIAIS DO SCRIPT.JS AQUI
+        const supabaseUrl = 'https://qjkroixbfzbwuskuvegt.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqa3JvaXhiZnpid3Vza3V2ZWd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMDEzNzQsImV4cCI6MjA5Njg3NzM3NH0.t0XscmqNClCMM5SF7LWQxvGzAJhdLtqnPTP-zFm3TcE';
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        document.getElementById('cadastro-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Criando...';
+
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: senha,
+                options: { data: { full_name: nome } }
+            });
+
+            if (error) {
+                alert("Erro ao criar conta: " + error.message);
+                btn.innerHTML = originalText;
+            } else {
+                alert("Conta criada com sucesso! Faça seu login.");
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>

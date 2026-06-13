@@ -21,7 +21,6 @@
         <div class="logo">
             <i class="fa-solid fa-bolt"></i> GymApp
         </div>
-        <!-- ALTERAÇÃO: Substituído o botão de sino por um link direto para a tela de login -->
         <div class="header-actions">
             <a href="login.html" id="login-btn" class="icon-btn" aria-label="Tela de Login">
                 <i class="fa-solid fa-right-to-bracket"></i>
@@ -62,10 +61,23 @@
                     </div>
                 </div>
             </div>
-            
-            <h3 class="section-title">Treino do Dia</h3>
+
+            <h3 class="section-title" style="margin-top: 16px;">🔥 Treino de Hoje</h3>
             <div id="featured-workout" class="glass-card featured-card">
+                </div>
+
+            <div class="glass-card schedule-card" style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; margin-top: 24px;">
+                <div>
+                    <h3 style="font-size: 1.05rem; margin-bottom: 4px;">Plano Semanal</h3>
+                    <p style="font-size: 0.85rem; margin: 0;" id="today-plan-text">
+                        <i class="fa-solid fa-spinner fa-spin"></i> Carregando...
+                    </p>
+                </div>
+                <button id="btn-edit-schedule" class="icon-btn" aria-label="Editar Semana">
+                    <i class="fa-solid fa-calendar-week"></i>
+                </button>
             </div>
+            
         </section>
 
         <section id="view-workouts" class="view-section">
@@ -181,8 +193,61 @@
         </div>
     </div>
 
+    <div id="schedule-modal" class="modal-overlay hidden">
+        <div class="glass-card modal-content">
+            <div class="modal-header">
+                <h3>Configurar Rotina</h3>
+                <button class="icon-btn close-schedule-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 20px;">Defina os grupos musculares para cada dia.</p>
+                <form id="schedule-form">
+                    <div id="schedule-inputs-container">
+                        </div>
+                    <button type="submit" class="btn btn-primary glow-effect" style="margin-top: 24px;">
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar Rotina
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="install-modal" class="modal-overlay hidden">
+        <div class="glass-card modal-content" style="text-align: center; padding: 32px 24px;">
+            <div style="font-size: 3rem; color: var(--accent-color); margin-bottom: 16px; text-shadow: 0 0 20px var(--shadow-glow);">
+                <i class="fa-solid fa-download"></i>
+            </div>
+            <h3 style="margin-bottom: 8px;">Instalar Aplicativo</h3>
+            <p style="margin-bottom: 24px; font-size: 0.9rem; color: var(--text-secondary);">Adicione o GymApp Pro à sua tela inicial para acessar seus treinos mais rápido, em tela cheia e sem distrações.</p>
+            
+            <button id="btn-install-app" class="btn btn-primary glow-effect hidden" style="margin-bottom: 12px;">
+                <i class="fa-solid fa-mobile-screen"></i> Adicionar à Tela Inicial
+            </button>
+            
+            <div id="ios-install-guide" class="hidden glass-element" style="padding: 16px; font-size: 0.85rem; text-align: left; margin-bottom: 16px;">
+                <p style="margin-bottom: 12px; font-weight: 600;">Para instalar no iOS:</p>
+                <ol style="margin-left: 20px; color: var(--text-secondary); line-height: 1.8;">
+                    <li>Toque no botão <strong>Compartilhar</strong> <i class="fa-solid fa-arrow-up-from-bracket" style="margin: 0 4px;"></i> na barra inferior.</li>
+                    <li>Role para baixo e selecione <strong>"Adicionar à Tela de Início"</strong> <i class="fa-regular fa-square-plus" style="margin: 0 4px;"></i>.</li>
+                </ol>
+            </div>
+
+            <button class="btn btn-secondary close-install-modal">Agora Não</button>
+        </div>
+    </div>
+
     <div id="toast-container"></div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registrado!'))
+                    .catch(err => console.log('Erro no Service Worker:', err));
+            });
+        }
+    </script>
 </body>
 </html>

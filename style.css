@@ -15,7 +15,7 @@
     
     --accent-color: #22d3ee; /* Cyan Neon */
     --accent-hover: #06b6d4;
-    --accent-glow: rgba(34, 211, 238, 0.15); /* Ajustado para fundo de tags */
+    --accent-glow: rgba(34, 211, 238, 0.15); 
     
     --success: #34d399;
     --danger: #fb7185;
@@ -39,9 +39,9 @@
     --text-primary: #0f172a;
     --text-secondary: #64748b;
     
-    --accent-color: #4f46e5; /* Indigo Vibrante */
+    --accent-color: #4f46e5; 
     --accent-hover: #4338ca;
-    --accent-glow: rgba(79, 70, 229, 0.1); /* Fundo mais suave no claro */
+    --accent-glow: rgba(79, 70, 229, 0.1); 
     
     --success: #10b981;
     --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -76,7 +76,6 @@ h3 { font-weight: 600; font-size: 1.2rem; margin-bottom: 12px; }
 p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
 .section-title { margin: 32px 0 16px; font-size: 1.25rem; }
 
-/* Gradiente de fundo sutil */
 .app-background {
     position: fixed;
     top: -50%; left: -50%; width: 200%; height: 200%;
@@ -96,7 +95,7 @@ p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
-    padding: 24px;
+    padding: 20px; /* Reduzido levemente para mobile */
     margin-bottom: 16px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -140,7 +139,7 @@ p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
     position: fixed;
     top: 0; left: 0; width: 100%; height: 70px;
     display: flex; justify-content: space-between; align-items: center;
-    padding: 0 24px; z-index: 100;
+    padding: 0 20px; z-index: 100;
     background: rgba(var(--bg-base), 0.5);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -150,12 +149,7 @@ p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
 .logo { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); display: flex; gap: 8px; align-items: center; }
 .logo i { color: var(--accent-color); text-shadow: 0 0 10px var(--shadow-glow); }
 
-/* NOVO CSS PARA ALINHAR OS BOTÕES NA HORIZONTAL E MANTER ESPAÇAMENTO ADEQUADO */
-.header-actions { 
-    display: flex; 
-    align-items: center; 
-    gap: 12px; 
-}
+.header-actions { display: flex; align-items: center; gap: 12px; }
 
 .icon-btn { background: var(--surface-200); border: 1px solid var(--border-color); color: var(--text-primary); width: 42px; height: 42px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
 .icon-btn:active { transform: scale(0.85); }
@@ -163,7 +157,13 @@ p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
 /* =========================================
    LAYOUT & VIEWS
 ========================================= */
-#app-content { padding: 90px 20px 120px 20px; min-height: 100vh; max-width: 600px; margin: 0 auto; }
+/* Ajuste de espaçamento inferior para acomodar a barra nativa */
+#app-content { 
+    padding: 86px 16px calc(90px + env(safe-area-inset-bottom, 0px)) 16px; 
+    min-height: 100vh; 
+    max-width: 600px; 
+    margin: 0 auto; 
+}
 .view-section { display: none; animation: fadeIn 0.4s ease forwards; }
 .view-section.active { display: block; }
 
@@ -180,19 +180,16 @@ p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
 .progress-bar { width: 100%; height: 8px; background: var(--surface-200); border-radius: 10px; overflow: hidden; }
 .progress-fill { height: 100%; background: var(--accent-color); border-radius: 10px; box-shadow: 0 0 10px var(--shadow-glow); transition: width 1s ease-in-out; }
 
-.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
 .stat-item { 
-    padding: 20px 10px; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    text-align: center; 
-    justify-content: center;
+    padding: 16px 10px; 
+    display: flex; flex-direction: column; align-items: center; 
+    text-align: center; justify-content: center;
     border-radius: var(--radius-md); 
 }
 .stat-item i { font-size: 1.5rem; color: var(--accent-color); margin-bottom: 8px; }
-.stat-value { font-size: 2.2rem; font-weight: 800; color: var(--text-primary); line-height: 1; margin-bottom: 6px; }
-.stat-label { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.3; }
+.stat-value { font-size: 2rem; font-weight: 800; color: var(--text-primary); line-height: 1; margin-bottom: 6px; }
+.stat-label { font-size: 0.7rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.3; }
 
 /* =========================================
    CATÁLOGO DE TREINOS
@@ -202,28 +199,18 @@ p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
 .search-bar input { background: transparent; border: none; color: var(--text-primary); outline: none; width: 100%; font-size: 1rem; margin-left: 12px; font-family: 'Inter', sans-serif;}
 .search-bar input::placeholder { color: var(--text-secondary); }
 
-.workout-grid { display: grid; gap: 20px; }
+.workout-grid { display: grid; gap: 16px; }
 .workout-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; border: 1px solid transparent; }
 .workout-card:hover { border-color: var(--accent-color); transform: translateY(-4px); box-shadow: var(--shadow-md); }
 
-.workout-img-container { position: relative; width: 100%; height: 180px; }
+.workout-img-container { position: relative; width: 100%; height: 160px; }
 .workout-img { width: 100%; height: 100%; object-fit: cover; }
 .workout-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to top, rgba(15, 23, 42, 0.4) 0%, transparent 100%); }
 
-.workout-info { padding: 24px; position: relative; z-index: 2; background: transparent; }
+.workout-info { padding: 20px; position: relative; z-index: 2; background: transparent; }
 
-.workout-tags { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;}
-.tag { 
-    font-size: 0.65rem; 
-    padding: 6px 14px; 
-    background: var(--accent-glow); 
-    color: var(--accent-color); 
-    border: 1px solid var(--accent-color); 
-    border-radius: 20px; 
-    font-weight: 700; 
-    text-transform: uppercase; 
-    letter-spacing: 0.5px;
-}
+.workout-tags { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;}
+.tag { font-size: 0.65rem; padding: 6px 12px; background: var(--accent-glow); color: var(--accent-color); border: 1px solid var(--accent-color); border-radius: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
 .workout-meta { display: flex; gap: 16px; margin-top: 16px; color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; }
 .workout-meta i { color: var(--accent-color); margin-right: 4px; }
@@ -234,7 +221,7 @@ p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
 ========================================= */
 .plan-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .status.active { background: rgba(16, 185, 129, 0.15); color: var(--success); padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-.price { font-size: 3rem; font-weight: 800; color: var(--text-primary); font-family: 'Outfit', sans-serif; }
+.price { font-size: 2.5rem; font-weight: 800; color: var(--text-primary); font-family: 'Outfit', sans-serif; }
 .price-period { font-size: 1rem; color: var(--text-secondary); font-weight: 500; }
 .divider { border: 0; height: 1px; background: var(--border-color); margin: 24px 0; }
 
@@ -245,25 +232,40 @@ p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
 .badge.success { color: var(--success); font-weight: 600; font-size: 0.9rem; }
 
 /* =========================================
-   NAVEGAÇÃO INFERIOR "PILL"
+   NAVEGAÇÃO INFERIOR DOCKED (COLADA NA BASE)
 ========================================= */
 .bottom-nav-container {
-    position: fixed; bottom: 20px; left: 0; width: 100%;
-    display: flex; justify-content: center; z-index: 100;
-    pointer-events: none;
+    position: fixed; 
+    bottom: 0; 
+    left: 0; 
+    width: 100%;
+    display: flex; 
+    justify-content: center; 
+    z-index: 100;
 }
 
 .glass-nav {
-    pointer-events: auto;
-    display: flex; justify-content: space-between; align-items: center;
-    background: var(--surface-100);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: 40px;
-    padding: 0 32px; 
-    width: 90%; max-width: 400px;
-    height: 64px; 
-    box-shadow: var(--shadow-md);
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    background: rgba(15, 23, 42, 0.85); /* Mais escuro para não vazar muito conteúdo debaixo */
+    backdrop-filter: blur(24px); 
+    -webkit-backdrop-filter: blur(24px);
+    border-top: 1px solid var(--border-color);
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 20px 20px 0 0; /* Arredondado só no topo */
+    padding: 0 10%; /* Espaçamento responsivo */
+    width: 100%; 
+    max-width: 100%; /* Ocupa tudo */
+    height: 75px; 
+    padding-bottom: env(safe-area-inset-bottom, 0px); /* Suporte para iPhone */
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .glass-nav {
+    background: rgba(255, 255, 255, 0.9);
 }
 
 .nav-item { 
@@ -271,13 +273,13 @@ p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
     height: 100%;
     background: none; border: none; color: var(--text-secondary); 
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    cursor: pointer; transition: 0.3s; width: 60px; 
+    cursor: pointer; transition: 0.3s; width: 70px; 
 }
-.nav-item i { font-size: 1.3rem; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.nav-item i { font-size: 1.4rem; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
 .nav-item span { 
     font-size: 0.65rem; font-weight: 600; 
-    position: absolute; bottom: 8px; 
+    position: absolute; bottom: 12px; 
     opacity: 0; transform: translateY(10px); transition: 0.3s; 
 }
 
@@ -290,21 +292,21 @@ p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
 ========================================= */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: flex-end; z-index: 999; opacity: 1; transition: 0.3s; }
 .modal-overlay.hidden { opacity: 0; pointer-events: none; }
-.modal-content { width: 100%; max-width: 600px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; margin-bottom: 0; transform: translateY(0); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.modal-content { width: 100%; max-width: 600px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; margin-bottom: 0; transform: translateY(0); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); padding: 24px; }
 .modal-overlay.hidden .modal-content { transform: translateY(100%); }
 
-.fullscreen-modal { height: 85vh; display: flex; flex-direction: column; }
+.fullscreen-modal { height: 90vh; display: flex; flex-direction: column; }
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-.qr-placeholder { height: 220px; display: flex; justify-content: center; align-items: center; border-radius: var(--radius-md); margin: 24px 0; background: #fff; color: #000; }
+.qr-placeholder { height: 200px; display: flex; justify-content: center; align-items: center; border-radius: var(--radius-md); margin: 20px 0; background: #fff; color: #000; }
 .glass-input { width: 100%; background: var(--bg-base); border: 1px solid var(--border-color); padding: 16px; color: var(--text-primary); border-radius: var(--radius-md); margin-bottom: 16px; outline: none; font-family: monospace; }
 
 /* Cronômetro Modal */
 .center-content { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; }
 .timer-display { font-size: 5rem; font-family: 'Outfit', sans-serif; font-weight: 800; color: var(--accent-color); text-shadow: 0 0 20px var(--shadow-glow); line-height: 1; }
 .timer-label { margin-bottom: 40px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; }
-.timer-controls { display: flex; gap: 16px; width: 100%; margin-bottom: 30px; }
+.timer-controls { display: flex; gap: 12px; width: 100%; margin-bottom: 30px; }
 #btn-timer-start { flex: 2; }
-#btn-timer-reset, #btn-timer-add { flex: 1; }
+#btn-timer-reset, #btn-timer-add { flex: 1; padding: 0 10px;}
 
 /* Toasts */
 #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; width: 90%; max-width: 400px; }
@@ -312,3 +314,38 @@ p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
 .toast i { font-size: 1.2rem; color: var(--accent-color); }
 @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
+
+/* =========================================
+   MODAL DE PLANEJAMENTO DE TREINO
+========================================= */
+.schedule-day-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.schedule-day-group label {
+    width: 35%;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+}
+
+select.glass-input {
+    width: 60%;
+    appearance: none;
+    cursor: pointer;
+    padding: 12px 16px;
+    height: 48px;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px top 50%;
+    background-size: 12px auto;
+}
+
+select.glass-input option {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+}
