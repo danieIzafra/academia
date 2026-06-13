@@ -1,15 +1,25 @@
 // sw.js - Service Worker Básico para permitir a instalação do PWA
-const CACHE_NAME = 'gymapp-v2';
+const CACHE_NAME = 'gymapp-v3';
 
 self.addEventListener('install', (event) => {
     self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName); // Apaga os caches antigos
+                    }
+                })
+            );
+        })
+    );
     event.waitUntil(clients.claim());
 });
 
 self.addEventListener('fetch', (event) => {
-    // Um fetch vazio é o suficiente para o navegador considerar o app "instalável"
     event.respondWith(fetch(event.request).catch(() => new Response('Offline')));
 });

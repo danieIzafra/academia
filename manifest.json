@@ -2,7 +2,7 @@
   "name": "GymApp Pro",
   "short_name": "GymApp",
   "description": "Aplicativo de Treinos e Gestão de Academia",
-  "start_url": "/https://github.com/danieIzafra/academia/index.html",
+  "start_url": "/academia/index.html",
   "scope": "/academia/",
   "display": "standalone",
   "background_color": "#121212",
